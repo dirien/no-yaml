@@ -13,3 +13,7 @@
 
 # Dependency directories (remove the comment below to include it)
 # vendor/
+
+.idea
+**/podtato-head-cdk8s/imports/
+**/podtato-head-cdk8s/dist/
