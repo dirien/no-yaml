@@ -3,7 +3,7 @@ package podtato
 import (
 	"context"
 	"fmt"
-
+	"github.com/kris-nova/naml"
 	appsv1 "k8s.io/api/apps/v1"
 	v1 "k8s.io/api/apps/v1"
 	apiv1 "k8s.io/api/core/v1"
@@ -16,8 +16,7 @@ import (
 var Version = "0.0.1"
 
 type PodtatoHeadApp struct {
-	name         string
-	description  string
+	naml.AppMeta
 	objects      []runtime.Object
 	podtatoParts []podtatoParts
 }
@@ -31,103 +30,103 @@ type podtatoParts struct {
 
 func NewPodtatoHeadApp() *PodtatoHeadApp {
 	return &PodtatoHeadApp{
-		name:        "podtato-kubectl",
-		description: "📨🚚 CNCF App Delivery SIG Demo",
+		AppMeta: naml.AppMeta{
+			Description: "📨🚚 CNCF App Delivery SIG Demo",
+			ObjectMeta: metav1.ObjectMeta{
+				Name:            "podtato",
+				ResourceVersion: Version,
+			},
+		},
 		podtatoParts: []podtatoParts{
 			{
-				PartName:     "podtato-main",
-				ImageVersion: "v1-latest-dev",
+				PartName:     "entry",
+				ImageVersion: "0.2.7",
 				ServicePort:  9000,
-				ServiceType:  apiv1.ServiceTypeLoadBalancer,
+				ServiceType:  "LoadBalancer",
 			},
 			{
-				PartName:     "podtato-hats",
-				ImageVersion: "v1-latest-dev",
+				PartName:     "hat",
+				ImageVersion: "0.2.7",
 				ServicePort:  9001,
-				ServiceType:  apiv1.ServiceTypeClusterIP,
+				ServiceType:  "ClusterIP",
 			},
 			{
-				PartName:     "podtato-left-leg",
-				ImageVersion: "v1-latest-dev",
+				PartName:     "left-leg",
+				ImageVersion: "0.2.7",
 				ServicePort:  9002,
-				ServiceType:  apiv1.ServiceTypeClusterIP,
+				ServiceType:  "ClusterIP",
 			},
 			{
-				PartName:     "podtato-left-arm",
-				ImageVersion: "v1-latest-dev",
+				PartName:     "left-arm",
+				ImageVersion: "0.2.7",
 				ServicePort:  9003,
-				ServiceType:  apiv1.ServiceTypeClusterIP,
+				ServiceType:  "ClusterIP",
 			},
 			{
-				PartName:     "podtato-right-leg",
-				ImageVersion: "v1-latest-dev",
+				PartName:     "right-leg",
+				ImageVersion: "0.2.7",
 				ServicePort:  9004,
-				ServiceType:  apiv1.ServiceTypeClusterIP,
+				ServiceType:  "ClusterIP",
 			},
 			{
-				PartName:     "podtato-right-arm",
-				ImageVersion: "v1-latest-dev",
+				PartName:     "right-arm",
+				ImageVersion: "0.2.7",
 				ServicePort:  9005,
-				ServiceType:  apiv1.ServiceTypeClusterIP,
+				ServiceType:  "ClusterIP",
 			},
 		},
 	}
 }
 
-func (p *PodtatoHeadApp) Install(client *kubernetes.Clientset) error {
+func (p *PodtatoHeadApp) Install(client kubernetes.Interface) error {
 	ctx := context.Background()
 	namespace := &apiv1.Namespace{
 		ObjectMeta: metav1.ObjectMeta{
-			Name: p.name,
+			Name: p.AppMeta.Name,
 		},
 	}
-	ns, err := client.CoreV1().Namespaces().Create(ctx, namespace, metav1.CreateOptions{})
-	if err != nil {
-		return fmt.Errorf("unable to install namespace in Kubernetes: %v", err)
-	}
-	p.objects = append(p.objects, ns)
-	appLabels := map[string]string{"app": "podtato-head"}
+	if client != nil {
+		ns, err := client.CoreV1().Namespaces().Create(ctx, namespace, metav1.CreateOptions{})
+		if err != nil {
+			return fmt.Errorf("unable to install namespace in Kubernetes: %v", err)
+		}
+		p.objects = append(p.objects, ns)
+		appLabels := map[string]string{"app": "podtato-head"}
 
-	err = p.buildPodtatoHeadComponent(ctx, client, appLabels)
-	if err != nil {
-		return err
+		err = p.buildPodtatoHeadComponent(ctx, client, appLabels)
+		if err != nil {
+			return err
+		}
 	}
-
 	return nil
 }
 
-func (p *PodtatoHeadApp) Uninstall(client *kubernetes.Clientset) error {
+func (p *PodtatoHeadApp) Uninstall(client kubernetes.Interface) error {
 	ctx := context.Background()
-	err := client.CoreV1().Namespaces().Delete(ctx, p.name, metav1.DeleteOptions{})
+	err := client.CoreV1().Namespaces().Delete(ctx, p.AppMeta.Name, metav1.DeleteOptions{})
 	if err != nil {
 		return err
 	}
 	return nil
 }
 
-func (p *PodtatoHeadApp) Meta() *metav1.ObjectMeta {
-	return &metav1.ObjectMeta{
-		Name: p.name,
-	}
-}
-
-func (p *PodtatoHeadApp) Description() string {
-	return p.description
+func (p *PodtatoHeadApp) Meta() *naml.AppMeta {
+	return &p.AppMeta
 }
 
 func (p *PodtatoHeadApp) Objects() []runtime.Object {
 	return p.objects
 }
 
-func (p *PodtatoHeadApp) buildPodtatoHeadComponent(ctx context.Context, client *kubernetes.Clientset, appName map[string]string) error {
-
+func (p *PodtatoHeadApp) buildPodtatoHeadComponent(ctx context.Context, client kubernetes.Interface, appName map[string]string) error {
 	for _, podtatoPart := range p.podtatoParts {
+		name := fmt.Sprintf("podtato-head-%s", podtatoPart.PartName)
 		componentLables := map[string]string{"component": podtatoPart.PartName}
 		terminationGracePeriodSeconds := int64(5)
 		deployment := &v1.Deployment{
 			ObjectMeta: metav1.ObjectMeta{
-				Name:      podtatoPart.PartName,
-				Namespace: p.name,
+				Name:      name,
+				Namespace: p.AppMeta.Name,
 				Labels:    appName,
 			},
 			Spec: appsv1.DeploymentSpec{
@@ -162,7 +161,7 @@ func (p *PodtatoHeadApp) buildPodtatoHeadComponent(ctx context.Context, client *
 				},
 			},
 		}
-		_, err := client.AppsV1().Deployments(p.name).Create(ctx, deployment, metav1.CreateOptions{})
+		_, err := client.AppsV1().Deployments(p.AppMeta.Name).Create(ctx, deployment, metav1.CreateOptions{})
 		if err != nil {
 			return fmt.Errorf("unable to install deployment in Kubernetes: %v", err)
 		}
@@ -170,8 +169,8 @@ func (p *PodtatoHeadApp) buildPodtatoHeadComponent(ctx context.Context, client *
 
 		service := &apiv1.Service{
 			ObjectMeta: metav1.ObjectMeta{
-				Name:      podtatoPart.PartName,
-				Namespace: p.name,
+				Name:      name,
+				Namespace: p.AppMeta.Name,
 				Labels:    appName,
 			},
 			Spec: apiv1.ServiceSpec{
@@ -187,7 +186,7 @@ func (p *PodtatoHeadApp) buildPodtatoHeadComponent(ctx context.Context, client *
 				Type: podtatoPart.ServiceType,
 			},
 		}
-		_, err = client.CoreV1().Services(p.name).Create(ctx, service, metav1.CreateOptions{})
+		_, err = client.CoreV1().Services(p.AppMeta.Name).Create(ctx, service, metav1.CreateOptions{})
 		if err != nil {
 			return fmt.Errorf("unable to install service in Kubernetes: %v", err)
 		}
