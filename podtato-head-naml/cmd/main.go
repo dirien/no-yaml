@@ -9,8 +9,8 @@ import (
 )
 
 func main() {
-	podtatoHead := podtato.NewPodtatoHeadApp()
 
+	podtatoHead := podtato.NewPodtatoHeadApp()
 	naml.Register(podtatoHead)
 	err := naml.RunCommandLine()
 	if err != nil {

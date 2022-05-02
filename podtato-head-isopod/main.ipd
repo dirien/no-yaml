@@ -1,0 +1,10 @@
+def clusters(ctx):
+    return [
+        onprem(env="dev", cluster="docker-desktop"),
+    ]
+
+
+def addons(ctx):
+    return [
+        addon("podtato-head", "podtato-head.ipd", ctx),
+    ]

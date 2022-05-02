@@ -24,9 +24,11 @@ func buildPodtatoHeadComponent(scope constructs.Construct, ns k8s.KubeNamespace,
 	imageVersion string, servicePort int, serviceType string) {
 	componentLabel := map[string]*string{"component": jsii.String(componentName)}
 
+	name := fmt.Sprintf("podtato-head-%s", componentName)
+
 	k8s.NewKubeDeployment(scope, jsii.String(fmt.Sprintf("%s-depl", componentName)), &k8s.KubeDeploymentProps{
 		Metadata: &k8s.ObjectMeta{
-			Name:      jsii.String(componentName),
+			Name:      jsii.String(name),
 			Namespace: ns.Metadata().Name(),
 			Labels:    &appName,
 		},
@@ -65,7 +67,7 @@ func buildPodtatoHeadComponent(scope constructs.Construct, ns k8s.KubeNamespace,
 
 	k8s.NewKubeService(scope, jsii.String(fmt.Sprintf("%s-svc", componentName)), &k8s.KubeServiceProps{
 		Metadata: &k8s.ObjectMeta{
-			Name:      jsii.String(componentName),
+			Name:      jsii.String(name),
 			Namespace: ns.Metadata().Name(),
 			Labels:    &appName,
 		},
@@ -93,9 +95,9 @@ func PodtatoHeadChart(scope constructs.Construct, id string, props *PodtatoHeadP
 
 	appLabels := map[string]*string{"app": jsii.String("podtato-head")}
 
-	namespace := k8s.NewKubeNamespace(chart, jsii.String("podtato-kubectl"), &k8s.KubeNamespaceProps{
+	namespace := k8s.NewKubeNamespace(chart, jsii.String("podtato"), &k8s.KubeNamespaceProps{
 		Metadata: &k8s.ObjectMeta{
-			Name: jsii.String("podtato-kubectl"),
+			Name: jsii.String("podtato"),
 		},
 	})
 	for _, podtatoPart := range props.PodtatoParts {

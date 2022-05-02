@@ -1,0 +1,101 @@
+appsv1 = proto.package("k8s.io.api.apps.v1")
+corev1 = proto.package("k8s.io.api.core.v1")
+metav1 = proto.package("k8s.io.apimachinery.pkg.apis.meta.v1")
+intstr = proto.package("k8s.io.apimachinery.pkg.util.intstr")
+
+namespace = "podtato"
+
+load("podtato-data.star", "podtato")
+
+def install(ctx):
+    appLabel = {"app": "podtato-head"}
+
+    metadata = metav1.ObjectMeta(
+        namespace=namespace,
+        labels=appLabel,
+    )
+
+    kube.put(
+        name=namespace,
+        data=[corev1.Namespace(
+            metadata=metav1.ObjectMeta(
+                name=namespace))
+              ],
+    )
+
+    for key in podtato.get("parts"):
+        name="podtato-head-{0}".format(key["name"])
+        componentLabel = {"component": key["name"]}
+        d = appsv1.Deployment(
+            metadata=metav1.ObjectMeta(
+                name=name,
+                namespace=namespace,
+                labels=componentLabel
+            ),
+            spec=appsv1.DeploymentSpec(
+                replicas=1,
+                selector=metav1.LabelSelector(matchLabels=componentLabel),
+                template=corev1.PodTemplateSpec(
+                    metadata=metav1.ObjectMeta(
+                        labels=componentLabel
+                    ),
+                    spec=corev1.PodSpec(
+                        containers=[
+                            corev1.Container(
+                                name=key["name"],
+                                image="ghcr.io/podtato-head/{0}:{1}".format(
+                                    key["name"], key["image"]),
+                                imagePullPolicy="Always",
+                                ports=[
+                                    corev1.ContainerPort(
+                                        containerPort=9000
+                                    )
+                                ],
+                                env=[
+                                    corev1.EnvVar(
+                                        name="PODTATO_PORT",
+                                        value="9000"
+                                    )
+                                ]
+                            )
+                        ]
+                    )
+                )
+            )
+        )
+        kube.put(
+            name=d.metadata.name,
+            namespace=namespace,
+            data=[d],
+        )
+
+        s = corev1.Service(
+            metadata=metav1.ObjectMeta(
+                name=name,
+                namespace=namespace,
+                labels=appLabel
+            ),
+            spec=corev1.ServiceSpec(
+                selector=componentLabel,
+                ports=[
+                    corev1.ServicePort(
+                        port=int(key["service"].get("port")),
+                        targetPort=intstr.IntOrString(
+                            intVal=9000
+                        ),
+                        protocol="TCP",
+                        name="http"
+                    )
+                ],
+                type=key["service"].get("type")
+            )
+        )
+        kube.put(
+            name=s.metadata.name,
+            namespace=namespace,
+            data=[s],
+        )
+
+
+def remove(ctx):
+    kube.delete(namespace=namespace)

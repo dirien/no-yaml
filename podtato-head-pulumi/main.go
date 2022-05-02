@@ -15,9 +15,11 @@ func buildPodtatoHeadComponent(ctx *pulumi.Context, ns *corev1.Namespace, appNam
 		"component": pulumi.String(componentName),
 	}
 
+	name := fmt.Sprintf("podtato-head-%s", componentName)
+
 	_, err := appsv1.NewDeployment(ctx, componentName, &appsv1.DeploymentArgs{
 		Metadata: &metav1.ObjectMetaArgs{
-			Name:      pulumi.String(componentName),
+			Name:      pulumi.String(name),
 			Namespace: ns.Metadata.Name(),
 			Labels:    appName,
 		},
@@ -58,7 +60,7 @@ func buildPodtatoHeadComponent(ctx *pulumi.Context, ns *corev1.Namespace, appNam
 
 	_, err = corev1.NewService(ctx, componentName, &corev1.ServiceArgs{
 		Metadata: &metav1.ObjectMetaArgs{
-			Name:      pulumi.String(componentName),
+			Name:      pulumi.String(name),
 			Namespace: ns.Metadata.Name(),
 			Labels:    appName,
 		},
@@ -92,41 +94,41 @@ type PodtatoParts struct {
 	ServiceType  string
 }
 
-var podtatoHead = PodtatoHead{
+var podtatoHead = &PodtatoHead{
 	PodtatoParts: []PodtatoParts{
 		{
-			PartName:     "podtato-main",
-			ImageVersion: "v1-latest-dev",
+			PartName:     "entry",
+			ImageVersion: "0.2.7",
 			ServicePort:  9000,
 			ServiceType:  "LoadBalancer",
 		},
 		{
-			PartName:     "podtato-hats",
-			ImageVersion: "v1-latest-dev",
+			PartName:     "hat",
+			ImageVersion: "0.2.7",
 			ServicePort:  9001,
 			ServiceType:  "ClusterIP",
 		},
 		{
-			PartName:     "podtato-left-leg",
-			ImageVersion: "v1-latest-dev",
+			PartName:     "left-leg",
+			ImageVersion: "0.2.7",
 			ServicePort:  9002,
 			ServiceType:  "ClusterIP",
 		},
 		{
-			PartName:     "podtato-left-arm",
-			ImageVersion: "v1-latest-dev",
+			PartName:     "left-arm",
+			ImageVersion: "0.2.7",
 			ServicePort:  9003,
 			ServiceType:  "ClusterIP",
 		},
 		{
-			PartName:     "podtato-right-leg",
-			ImageVersion: "v1-latest-dev",
+			PartName:     "right-leg",
+			ImageVersion: "0.2.7",
 			ServicePort:  9004,
 			ServiceType:  "ClusterIP",
 		},
 		{
-			PartName:     "podtato-right-arm",
-			ImageVersion: "v1-latest-dev",
+			PartName:     "right-arm",
+			ImageVersion: "0.2.7",
 			ServicePort:  9005,
 			ServiceType:  "ClusterIP",
 		},
