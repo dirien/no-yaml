@@ -1,5 +1,10 @@
 # no-yaml
 
+Read the detailed article on my blog:
+
+- [Kubernetes: No YAML, please!?](https://blog.ediri.io/kubernetes-no-yaml-please)
+- [Kubernetes: No YAML, please!? - Part 2](https://blog.ediri.io/kubernetes-no-yaml-please-part-2)
+
 No YAML deployments to K8s with following approaches:
 
 - Pulumi
