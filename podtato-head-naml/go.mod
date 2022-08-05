@@ -1,6 +1,6 @@
 module github.com/dirien/podtato-head-naml
 
-go 1.18
+go 1.19
 
 require (
 	github.com/kris-nova/logger v0.2.2
