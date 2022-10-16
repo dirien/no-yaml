@@ -3,7 +3,7 @@ module github.com/dirien/podtato-head-cdk8s
 go 1.19
 
 require (
-	github.com/aws/constructs-go/constructs/v3 v3.4.124
+	github.com/aws/constructs-go/constructs/v3 v3.4.125
 	github.com/aws/jsii-runtime-go v1.69.0
 	github.com/cdk8s-team/cdk8s-core-go/cdk8s v1.8.16
 )
