@@ -3,7 +3,7 @@ module podtato-head-pulumi
 go 1.19
 
 require (
-	github.com/pulumi/pulumi-kubernetes/sdk/v3 v3.22.2
+	github.com/pulumi/pulumi-kubernetes/sdk/v3 v3.23.0
 	github.com/pulumi/pulumi/sdk/v3 v3.49.0
 )
 
