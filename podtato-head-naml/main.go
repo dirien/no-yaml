@@ -1,12 +1,20 @@
 package main
 
 import (
+	"github.com/dirien/podtato-head-naml/internal/podtato"
 	"os"
 
-	"github.com/dirien/podtato-head-naml"
 	"github.com/kris-nova/logger"
 	"github.com/kris-nova/naml"
 )
+
+type version struct {
+	Version   string
+	Revision  string
+	Branch    string
+	BuildUser string
+	BuildDate string
+}
 
 func main() {
 

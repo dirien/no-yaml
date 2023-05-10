@@ -31,10 +31,10 @@ Create a new Go project and add the NAML libs to your project.
 Run go build . to crate your app (or use goreleaser)
 
 ```
-go build .
+go build -o podtato . 
 ```
 
-Run your app. ./app
+Run your app: `./podtato`
 
 # cdk8s
 
