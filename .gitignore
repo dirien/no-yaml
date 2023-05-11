@@ -18,3 +18,5 @@
 **/podtato-head-cdk8s/imports/
 **/podtato-head-cdk8s/dist/
 **/podtato-head-naml/dist/
+/hello-world/cdk8s-helloworld/imports/
+/hello-world/cdk8s-helloworld/dist/
