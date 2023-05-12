@@ -3,10 +3,10 @@ module github.com/dirien/podtato-head-cdk8s
 go 1.20
 
 require (
-	github.com/aws/constructs-go/constructs/v10 v10.2.19
+	github.com/aws/constructs-go/constructs/v10 v10.2.21
 	github.com/aws/jsii-runtime-go v1.81.0
-	github.com/cdk8s-team/cdk8s-core-go/cdk8s/v2 v2.7.58
-	github.com/cdk8s-team/cdk8s-plus-go/cdk8splus26/v2 v2.3.25
+	github.com/cdk8s-team/cdk8s-core-go/cdk8s/v2 v2.7.59
+	github.com/cdk8s-team/cdk8s-plus-go/cdk8splus26/v2 v2.3.26
 )
 
 require (
