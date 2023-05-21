@@ -3,10 +3,10 @@ module example.com/cdk8s-helloworld
 go 1.18
 
 require (
-	github.com/aws/constructs-go/constructs/v10 v10.2.28
+	github.com/aws/constructs-go/constructs/v10 v10.2.30
 	github.com/aws/jsii-runtime-go v1.81.0
-	github.com/cdk8s-team/cdk8s-core-go/cdk8s/v2 v2.7.70
-	github.com/cdk8s-team/cdk8s-plus-go/cdk8splus26/v2 v2.3.33
+	github.com/cdk8s-team/cdk8s-core-go/cdk8s/v2 v2.7.72
+	github.com/cdk8s-team/cdk8s-plus-go/cdk8splus26/v2 v2.3.35
 )
 
 require (
