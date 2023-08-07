@@ -4,9 +4,9 @@ go 1.20
 
 require (
 	github.com/aws/constructs-go/constructs/v10 v10.2.69
-	github.com/aws/jsii-runtime-go v1.85.0
-	github.com/cdk8s-team/cdk8s-core-go/cdk8s/v2 v2.29.0
-	github.com/cdk8s-team/cdk8s-plus-go/cdk8splus26/v2 v2.12.0
+	github.com/aws/jsii-runtime-go v1.86.1
+	github.com/cdk8s-team/cdk8s-core-go/cdk8s/v2 v2.36.0
+	github.com/cdk8s-team/cdk8s-plus-go/cdk8splus26/v2 v2.15.0
 )
 
 require (
