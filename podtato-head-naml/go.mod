@@ -5,9 +5,9 @@ go 1.20
 require (
 	github.com/kris-nova/logger v0.2.2
 	github.com/kris-nova/naml v1.0.3
-	k8s.io/api v0.28.0
-	k8s.io/apimachinery v0.28.0
-	k8s.io/client-go v0.28.0
+	k8s.io/api v0.28.1
+	k8s.io/apimachinery v0.28.1
+	k8s.io/client-go v0.28.1
 )
 
 require (
