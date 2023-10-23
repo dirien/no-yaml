@@ -4,8 +4,8 @@ github.com/aws/constructs-go/constructs/v10 v10.3.0 h1:LsjBIMiaDX/vqrXWhzTquBJ9p
 github.com/aws/constructs-go/constructs/v10 v10.3.0/go.mod h1:GgzwIwoRJ2UYsr3SU+JhAl+gq5j39bEMYf8ev3J+s9s=
 github.com/aws/jsii-runtime-go v1.90.0 h1:Kbw+bAy1etfyYSpNu09a12N9taT+/NxRDnfvgtmCGI8=
 github.com/aws/jsii-runtime-go v1.90.0/go.mod h1:xLBI2fKjWK68+eqqmvkv4HL1f4YUPLiAi5BT3wNUD74=
-github.com/cdk8s-team/cdk8s-core-go/cdk8s/v2 v2.67.1 h1:qjYAe2IfutRWQukqaOaPMGKbRO0LjHeSkmL7cfEF+/U=
-github.com/cdk8s-team/cdk8s-core-go/cdk8s/v2 v2.67.1/go.mod h1:mnDyYP6qgK+pS2ug5ee/NAbNNIvp3tBg775Czuhyg40=
+github.com/cdk8s-team/cdk8s-core-go/cdk8s/v2 v2.67.2 h1:gnOkCnVsOkBja1SQXKyrmiqrHKf9w3e6Aru1cknkoeg=
+github.com/cdk8s-team/cdk8s-core-go/cdk8s/v2 v2.67.2/go.mod h1:mnDyYP6qgK+pS2ug5ee/NAbNNIvp3tBg775Czuhyg40=
 github.com/cdk8s-team/cdk8s-plus-go/cdk8splus26/v2 v2.18.45 h1:ojsvBWsyH6SJCYkabFRPyR4HGuVYd5CKOpZaFj3WeUg=
 github.com/cdk8s-team/cdk8s-plus-go/cdk8splus26/v2 v2.18.45/go.mod h1:3v/yh/hWM8yEurUljKzs8vjSujGQQK4j4j2pRiIbzWc=
 github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=
