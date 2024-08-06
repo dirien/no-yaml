@@ -2,7 +2,7 @@ module github.com/dirien/podtato-head-naml
 
 go 1.22.0
 
-toolchain go1.22.5
+toolchain go1.22.6
 
 require (
 	github.com/kris-nova/logger v0.2.2
