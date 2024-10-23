@@ -7,9 +7,9 @@ toolchain go1.23.2
 require (
 	github.com/kris-nova/logger v0.2.2
 	github.com/kris-nova/naml v1.0.3
-	k8s.io/api v0.31.1
-	k8s.io/apimachinery v0.31.1
-	k8s.io/client-go v0.31.1
+	k8s.io/api v0.31.2
+	k8s.io/apimachinery v0.31.2
+	k8s.io/client-go v0.31.2
 )
 
 require (
