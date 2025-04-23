@@ -2,14 +2,14 @@ module github.com/dirien/podtato-head-naml
 
 go 1.23.0
 
-toolchain go1.23.6
+toolchain go1.24.2
 
 require (
 	github.com/kris-nova/logger v0.2.2
 	github.com/kris-nova/naml v1.0.3
-	k8s.io/api v0.32.1
-	k8s.io/apimachinery v0.32.1
-	k8s.io/client-go v0.32.1
+	k8s.io/api v0.32.4
+	k8s.io/apimachinery v0.32.4
+	k8s.io/client-go v0.32.4
 )
 
 require (
